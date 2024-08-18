@@ -7,9 +7,14 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+  String getFullName(String firstName, String lastName) {
+    return '$firstName $lastName';
+  }
+
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(' ' + 'hello' + ' ' + getFullName('foo', 'bar'));
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
