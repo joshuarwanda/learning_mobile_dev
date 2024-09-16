@@ -12,19 +12,19 @@ void main() {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomePage(),
+      home: const RegisterView(),
     ),
   );
 }
 
-class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _RegisterViewState extends State<RegisterView> {
   late final TextEditingController _email;
   late final TextEditingController _password;
 
@@ -42,12 +42,14 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  @override
+ @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(title: const Text('Register')),
         body: FutureBuilder(
-            future: Firebase.initializeApp(),
+            future: Firebase.initializeApp(
+              options: DefaultFirebaseOptions.currentPlatform,
+            ),
             builder: (context, snapshot) {
               switch (snapshot.connectionState) {
                 case ConnectionState.done:
@@ -93,3 +95,4 @@ class _HomePageState extends State<HomePage> {
             }));
   }
 }
+
