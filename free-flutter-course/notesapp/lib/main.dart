@@ -24,29 +24,49 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: const Text('Home')),
-        body: FutureBuilder(
-            future: Firebase.initializeApp(
-              options: DefaultFirebaseOptions.currentPlatform,
-            ),
-            builder: (context, snapshot) {
-              switch (snapshot.connectionState) {
-                case ConnectionState.done:
-                  final user = FirebaseAuth.instance.currentUser;
-                  if (user?.emailVerified ?? false) {
-                    print('user is verified');
-                    // return Center(
-                    //   child: Text('Welcome ${user!.email}'),
-                    // );
-                  } else {
-                    print('user is not verified');
-                    // return const LoginView();
-                  }
+      appBar: AppBar(title: const Text('Home')),
+      body: FutureBuilder(
+          future: Firebase.initializeApp(
+            options: DefaultFirebaseOptions.currentPlatform,
+          ),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.done:
+                final user = FirebaseAuth.instance.currentUser;
+                if (user?.emailVerified ?? false) {
+                  return Center(
+                    child: Text('Welcome ${user!.email}'),
+                  );
+                } else {
+                  return const VerifyEmailView();
+                }
+              // return const LoginView();
+              default:
+                return const LoginView();
+            }
+          }),
+    );
+  }
+}
 
-                default:
-                  return const LoginView();
-              }
-              return const CircularProgressIndicator();
-            }));
+class VerifyEmailView extends StatefulWidget {
+  const VerifyEmailView({super.key});
+
+  @override
+  State<VerifyEmailView> createState() => _VerifyEmailViewState();
+}
+
+class _VerifyEmailViewState extends State<VerifyEmailView> {
+  @override
+  Widget build(BuildContext context) {
+    return Column(children: [
+      TextButton(
+        onPressed: () async {
+          final user = FirebaseAuth.instance.currentUser;
+          await user?.sendEmailVerification();
+        },
+        child: const Text('Please verify your email'),
+      )
+    ]);
   }
 }
