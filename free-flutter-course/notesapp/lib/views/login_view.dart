@@ -1,8 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:notesapp/firebase_options.dart';
+// import 'package:notesapp/firebase_options.dart';
 // import '../firebase_options.dart';
+import 'dart:developer' as devtools show log;
 
 class LoginView extends StatefulWidget {
   const LoginView({super.key});
@@ -64,12 +65,12 @@ class _LoginViewState extends State<LoginView> {
                   email: email,
                   password: password,
                 );
-                print(userCredential.user);
+                devtools.log(userCredential.toString());
               } on FirebaseAuthException catch (e) {
                 if (e.code == 'invalid-credential') {
-                  print('Invalid credentials');
+                  devtools.log('Invalid Credentials');
                 }
-                print('something went wrong');
+                devtools.log('Something went wrong');
               }
             },
             child: const Text('Login'),
