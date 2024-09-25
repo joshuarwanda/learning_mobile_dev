@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:developer' as devtools show log;
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    print(' hello ${getFullName('foo', 'bar')}');
+    devtools.log(' hello ${getFullName('foo', 'bar')}');
     return MaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(
