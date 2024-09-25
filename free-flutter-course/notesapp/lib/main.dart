@@ -39,8 +39,8 @@ class HomePage extends StatelessWidget {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
               final user = FirebaseAuth.instance.currentUser;
-              if (user == null) {
-                if (user?.emailVerified ?? false) {
+              if (user != null) {
+                if (user.emailVerified) {
                   return const NotesView();
                 } else {
                   return const VerifyEmailView();
@@ -80,7 +80,7 @@ class _NotesViewState extends State<NotesView> {
                 if (shouldLogout) {
                   await FirebaseAuth.instance.signOut();
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                    '/login',
+                    '/login/',
                     (_) => false,
                   );
                 }
